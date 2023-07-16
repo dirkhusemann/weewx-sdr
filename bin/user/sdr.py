@@ -1314,6 +1314,8 @@ class FOWHx080Packet(Packet):
         # but some newer versions of rtl_433 seem to use 'id'
         if 'id' in obj:
             pkt['station_id'] = obj.get('id')
+        if 'uv_sensor_id' in obj:
+            pkt['station_id'] = obj.get('id')
         pkt['msg_type'] = Packet.get_int(obj, 'msg_type')
         pkt['msg_type'] = Packet.get_int(obj, 'subtype')
         pkt['temperature'] = Packet.get_float(obj, 'temperature_C')
@@ -1332,6 +1334,10 @@ class FOWHx080Packet(Packet):
         pkt['year'] = Packet.get_int(obj, 'year')
         pkt['month'] = Packet.get_int(obj, 'month')
         pkt['day'] = Packet.get_int(obj, 'day')
+        pkt['uv_index'] = Packet.get_float(obj, 'uv_index')
+        pkt['luminosity'] = Packet.get_float(obj, 'lux')
+        pkt['radiation'] = Packet.get_float(obj, 'wm')
+        pkt['uv_status'] = 0 if obj.get('uv_status') == 'OK' else 1
         return FOWHx080Packet.insert_ids(pkt)
 
     @staticmethod
